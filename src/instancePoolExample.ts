@@ -25,20 +25,51 @@ export class Application {
 }
 
 export class PopupWindow {
-    private _someUiElement: HTMLElement;
+    protected _uiElement: HTMLElement;
 
     public constructor(app: Application) {
-        this._someUiElement = document.createElement("div");
-        app.popupRoot.appendChild(this._someUiElement);
+        const uiElement = this._uiElement = document.createElement("div");
+        app.popupRoot.appendChild(uiElement);
+
+        uiElement.style.position = "absolute";
+        uiElement.style.left = "50%";
+        uiElement.style.top = "50%";
+        uiElement.style.transform = "translate(-50%, -50%)";
+
+        uiElement.style.width = "300px";
+        uiElement.style.height = "200px";
+        uiElement.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
+        uiElement.style.color = "white";
+        
+        const popupTitleDiv = document.createElement("div");
+        uiElement.appendChild(popupTitleDiv);
+        popupTitleDiv.textContent = "Popup Window";
+        popupTitleDiv.style.textAlign = "center";
+        popupTitleDiv.style.padding = "10px";
+        popupTitleDiv.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
     }
 
     public dispose(): void {
-        this._someUiElement.remove();
+        this._uiElement.remove();
     }
 }
 
 export class AnnouncementPopup extends PopupWindow {
+    private _popupContentDiv: HTMLElement;
+
     public constructor(app: Application) {
         super(app);
+
+        const popupContentDiv = this._popupContentDiv = document.createElement("div");
+        this._uiElement.appendChild(popupContentDiv);
+        popupContentDiv.style.padding = "10px";
+    }
+
+    public get content(): string {
+        return this._popupContentDiv.textContent ?? "";
+    }
+
+    public set content(value: string) {
+        this._popupContentDiv.textContent = value;
     }
 }

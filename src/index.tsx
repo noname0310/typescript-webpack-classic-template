@@ -21,11 +21,14 @@ if (false) {
 if (false) {
     const app = new Application(document.body);
 
-    const popup = new AnnouncementPopup(app);
-    const popup2 = app.createPopupWindow(AnnouncementPopup);
+    // const popup = new AnnouncementPopup(app);
+    const popup = app.createPopupWindow(AnnouncementPopup) as AnnouncementPopup;
+    popup.content = "Hello, World!";
 
-    popup.dispose();
-    app.disposePopupWindow(popup2);
+    setTimeout(() => {
+        // popup.dispose();
+        app.disposePopupWindow(popup);
+    }, 3000);
 }
 
 // 3. bmp header parser example
